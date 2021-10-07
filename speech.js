@@ -203,7 +203,7 @@ function amIMentioned(msg) {
 	var isItMe = false;
 
 	msg.mentions.users.each(user => {
-		if (user.username == "Wyrocznia") {
+		if (user.username == "odmieniec") {
 			isItMe = true;
 		}
 	});
