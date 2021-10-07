@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+	"module": "es6",
+	"moduleResolution": "node",
+    "target": "es6",
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["*"],
+  "exclude": ["node_modules"]
+}

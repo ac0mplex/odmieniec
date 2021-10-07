@@ -1,0 +1,17 @@
+{
+	"token": "<discord bot token>",
+
+	"textDatabaseDir": "<path>",
+	"textDatabaseFilename": "messages",
+	"doBackups": false,
+	"saveEveryMinutes": 120,
+
+	"numOfBaseWords": 2,
+	"maxWords": 30,
+	"maxWordJumps": 30,
+	"chanceToJump": 1,
+	"chanceToTalk": 25,
+
+	"predefinedReactions": [
+	]
+}
