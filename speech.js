@@ -199,7 +199,7 @@ function loadDatabase(name, loadFunc) {
 }
 
 function amIMentioned(msg) {
-	if (msg.channel.name == "jaskinia-odmieńca")
+	if (msg.channel.name == config.homeChannel)
 		return true;
 
 	var isItMe = false;

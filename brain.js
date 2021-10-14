@@ -18,6 +18,10 @@ function process(msg) {
 		}
 	}
 
+	if (config.ignoredChannels.includes(msg.channel.name)) {
+		return;
+	}
+
 	if (speech.amIMentioned(msg)) {
 		if (speech.isQuestionAboutPerson(msg.content)) {
 			speech.choosePerson(msg.guild).then(

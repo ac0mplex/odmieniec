@@ -6,6 +6,11 @@
 	"doBackups": false,
 	"saveEveryMinutes": 120,
 
+	"homeChannel": "jaskinia-odmieńca",
+	"ignoredChannels": [
+		"disboard"
+	],
+
 	"numOfBaseWords": 2,
 	"maxWords": 30,
 	"maxWordJumps": 30,
