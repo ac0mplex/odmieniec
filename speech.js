@@ -131,6 +131,8 @@ function talk() {
 }
 
 function save() {
+	console.log("Saving speech database...");
+
 	if (messages_new.length == 0) {
 		console.log("Nothing new to save. ¯\\_(ツ)_/¯");
 		return;
@@ -145,7 +147,7 @@ function save() {
 
 	messages_new = new Array();
 
-	console.log(`Database saved.`);
+	console.log(`Speech database saved.`);
 }
 
 function saveDatabase(name, saveFunc) {
