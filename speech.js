@@ -205,7 +205,7 @@ function amIMentioned(msg) {
 	var isItMe = false;
 
 	msg.mentions.users.each(user => {
-		if (user.username == "odmieniec") {
+		if (user.username == config.nickname) {
 			isItMe = true;
 		}
 	});

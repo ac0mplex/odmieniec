@@ -1,5 +1,6 @@
 {
 	"token": "<discord bot token>",
+	"nickname": "odmieniec",
 
 	"textDatabaseDir": "<path>",
 	"textDatabaseFilename": "messages",
