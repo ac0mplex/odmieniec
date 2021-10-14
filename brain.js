@@ -7,8 +7,13 @@ function start() {
 }
 
 function process(msg) {
-	if (msg.author.bot)
+	if (msg.author.bot) {
 		return;
+	}
+
+	if (config.ignoredChannels.includes(msg.channel.name)) {
+		return;
+	}
 
 	for (const reaction of config.predefinedReactions) {
 		var regexp = new RegExp(reaction[0]);
@@ -16,10 +21,6 @@ function process(msg) {
 			msg.channel.send(reaction[1]);
 			return;
 		}
-	}
-
-	if (config.ignoredChannels.includes(msg.channel.name)) {
-		return;
 	}
 
 	if (speech.amIMentioned(msg)) {
