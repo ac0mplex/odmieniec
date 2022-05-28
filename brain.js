@@ -2,9 +2,10 @@ const config = require('./config.json');
 const dedent = require('dedent-js')
 const freeWill = require('./free_will.js');
 const speech = require('./speech.js');
+const randomSpeech = require('./random_speech.js');
 
 function start() {
-	speech.load();
+	randomSpeech.load();
 }
 
 function process(msg) {
@@ -34,21 +35,21 @@ function process(msg) {
 		} else if (speech.isDumpRequest(msg.content)) {
 			msg.channel.send(dump());
 		} else {
-			msg.channel.send(speech.talk());
+			msg.channel.send(randomSpeech.talk());
 		}
 	} else {
-		speech.learn(msg.content);
+		randomSpeech.learn(msg.content);
 
 		if (freeWill.wantToTalk()) {
-			msg.channel.send(speech.talk());
+			msg.channel.send(randomSpeech.talk());
 		}
 	}
 }
 
 function dump() {
 	return dedent`
-		SPEECH:
-		${speech.dump()}
+		RANDOM SPEECH:
+		${randomSpeech.dump()}
 
 		FREE WILL:
 		${freeWill.dump()}
@@ -56,7 +57,7 @@ function dump() {
 }
 
 function save() {
-	speech.save();
+	randomSpeech.save();
 }
 
 module.exports.start = start;
