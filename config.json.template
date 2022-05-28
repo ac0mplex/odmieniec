@@ -17,6 +17,7 @@
 	"maxWordJumps": 30,
 	"chanceToJump": 1,
 	"chanceToTalk": 25,
+	"minRequestsToRandomTalk": 20
 
 	"predefinedReactions": [
 	]

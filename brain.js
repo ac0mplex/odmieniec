@@ -1,6 +1,6 @@
 const config = require('./config.json');
 const speech = require('./speech.js');
-const random = require('./random.js');
+const freeWill = require('./free_will.js');
 
 function start() {
 	speech.load();
@@ -36,7 +36,7 @@ function process(msg) {
 	} else {
 		speech.learn(msg.content);
 
-		if (random.roll(config.chanceToTalk) == 0) {
+		if (freeWill.wantToTalk()) {
 			msg.channel.send(speech.talk());
 		}
 	}
