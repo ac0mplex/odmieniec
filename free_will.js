@@ -16,3 +16,8 @@ module.exports.wantToTalk = function () {
 		return false;
 	}
 }
+
+
+module.exports.dump = function () {
+	return `Requests until want to talk: ${requestsUntilWantToTalk}`;
+}

@@ -1,7 +1,8 @@
 const config = require('./config.json');
 const dateFormat = require('dateformat');
-const random = require('./random.js');
+const dedent = require('dedent-js');
 const fs = require('fs');
+const random = require('./random.js');
 
 var numOfBaseWords = config.numOfBaseWords;
 
@@ -225,8 +226,7 @@ function isUserMentioned(msg, username) {
 	return isMentioned;
 }
 
-function removeMentions(msg)
-{
+function removeMentions(msg) {
 	var newMsg = msg.replace(/\<.*\>/g, "").trim();
 	newMsg = newMsg.replace(/  /g, " ");
 	return newMsg;
@@ -299,6 +299,20 @@ function choosePerson(guild) {
 	return randomResponse;
 }
 
+
+function isDumpRequest(msg) {
+	msg = removeMentions(msg).toLowerCase();
+
+	return msg.startsWith("brain dump") ||
+		   msg.startsWith("braindump");
+}
+
+function dump() {
+	return dedent`
+		Messages in brain: ${messages.length}
+	`;
+}
+
 module.exports.load = load;
 module.exports.save = save;
 module.exports.learn = learn;
@@ -309,4 +323,5 @@ module.exports.isYesOrNoQuestion = isYesOrNoQuestion;
 module.exports.answerYesOrNo = answerYesOrNo;
 module.exports.isQuestionAboutPerson = isQuestionAboutPerson;
 module.exports.choosePerson = choosePerson;
-
+module.exports.isDumpRequest = isDumpRequest;
+module.exports.dump = dump;

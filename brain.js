@@ -1,6 +1,7 @@
 const config = require('./config.json');
-const speech = require('./speech.js');
+const dedent = require('dedent-js')
 const freeWill = require('./free_will.js');
+const speech = require('./speech.js');
 
 function start() {
 	speech.load();
@@ -30,6 +31,8 @@ function process(msg) {
 			);
 		} else if (speech.isYesOrNoQuestion(msg.content)) {
 			msg.channel.send(speech.answerYesOrNo());
+		} else if (speech.isDumpRequest(msg.content)) {
+			msg.channel.send(dump());
 		} else {
 			msg.channel.send(speech.talk());
 		}
@@ -40,6 +43,16 @@ function process(msg) {
 			msg.channel.send(speech.talk());
 		}
 	}
+}
+
+function dump() {
+	return dedent`
+		SPEECH:
+		${speech.dump()}
+
+		FREE WILL:
+		${freeWill.dump()}
+	`;
 }
 
 function save() {
