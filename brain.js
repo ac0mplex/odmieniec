@@ -18,7 +18,8 @@ function process(msg) {
 	}
 
 	for (const reaction of config.predefinedReactions) {
-		var regexp = new RegExp(reaction[0]);
+		let flags = reaction.length >= 3 ? reaction[2] : "";
+		let regexp = new RegExp(reaction[0], flags);
 		if (regexp.test(msg.content)) {
 			msg.channel.send(reaction[1]);
 			return;
