@@ -1,4 +1,4 @@
-const config = require('./config.json');
+const config = require('../config.json');
 const dedent = require('dedent-js')
 const freeWill = require('./free_will.js');
 const speech = require('./speech.js');

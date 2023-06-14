@@ -1,10 +1,10 @@
-const config = require('./config.json');
+const config = require('../config.json');
 const dateFormat = require('dateformat');
 const dedent = require('dedent-js');
 const fs = require('fs');
 const random = require('./random.js');
 
-var numOfBaseWords = config.numOfBaseWords;
+let numOfBaseWords = config.numOfBaseWords;
 
 class WordRef {
 	messageIndex;
@@ -28,7 +28,7 @@ class Database {
 	}
 
 	add(keys, value) {
-		var key = this.getKey(keys);
+		let key = this.getKey(keys);
 
 		if (!this.#map.has(key)) {
 			this.#map.set(key, []);
@@ -38,8 +38,8 @@ class Database {
 	}
 
 	getRandomAtKey(keys) {
-		var key = this.getKey(keys);
-		var values = this.#map.get(key);
+		let key = this.getKey(keys);
+		let values = this.#map.get(key);
 		return values[random.roll(values.length)];
 	}
 
@@ -52,9 +52,9 @@ class Database {
 	}
 }
 
-var messages = new Array();
-var messages_new = new Array();
-var jumpDatabase = new Database();
+let messages = new Array();
+let messages_new = new Array();
+let jumpDatabase = new Database();
 
 function learn(string, saveToFile = true) {
 	if (!string) {
@@ -65,7 +65,7 @@ function learn(string, saveToFile = true) {
 		return;
 	}
 
-	var words = string.trim().split(/[\r\t\n ]+/)
+	let words = string.trim().split(/[\r\t\n ]+/)
 
 	if (words.length == 0) {
 		return;
@@ -75,11 +75,11 @@ function learn(string, saveToFile = true) {
 			messages_new.push(words);
 		}
 
-		var currentMessageIndex = messages.length - 1;
+		let currentMessageIndex = messages.length - 1;
 
-		for (var i = 0; i < (words.length - numOfBaseWords); i++) {
-			var wordRef = new WordRef(currentMessageIndex, i + numOfBaseWords);
-			var keys = words.slice(i, i + numOfBaseWords)
+		for (let i = 0; i < (words.length - numOfBaseWords); i++) {
+			let wordRef = new WordRef(currentMessageIndex, i + numOfBaseWords);
+			let keys = words.slice(i, i + numOfBaseWords)
 			jumpDatabase.add(keys, wordRef);
 		}
 	}
@@ -88,8 +88,8 @@ function learn(string, saveToFile = true) {
 function talk() {
 	console.log("** I'm gonna talk! **");
 
-	var currentMessageIndex = random.roll(messages.length);
-	var currentMessage = messages[currentMessageIndex];
+	let currentMessageIndex = random.roll(messages.length);
+	let currentMessage = messages[currentMessageIndex];
 
 	console.log(`Starting at "${currentMessage.join(' ')}"`);
 
@@ -97,16 +97,16 @@ function talk() {
 		return currentMessage[0];
 	}
 
-	var message = currentMessage.slice(0, numOfBaseWords).join(' ');
-	var numOfWords = numOfBaseWords;
-	var wordIndex = numOfBaseWords;
+	let message = currentMessage.slice(0, numOfBaseWords).join(' ');
+	let numOfWords = numOfBaseWords;
+	let wordIndex = numOfBaseWords;
 	console.log(`Current message: "${message}"`);
 
-	var remainingJumps = config.maxWordJumps;
+	let remainingJumps = config.maxWordJumps;
 
 	while (wordIndex < currentMessage.length && numOfWords < config.maxWords) {
 		if (remainingJumps > 0 && random.roll(config.chanceToJump) == 0) {
-			var randomWordRef = jumpDatabase.getRandomAtKey(
+			let randomWordRef = jumpDatabase.getRandomAtKey(
 				currentMessage.slice(wordIndex - numOfBaseWords, wordIndex)
 			);
 
@@ -152,21 +152,21 @@ function save() {
 }
 
 function saveDatabase(name, saveFunc) {
-	var path = `${config.textDatabaseDir}/${name}`;
+	let path = `${config.textDatabaseDir}/${name}`;
 
 	if (!fs.existsSync(config.textDatabaseDir)) {
 		fs.mkdirSync(config.textDatabaseDir, { recursive: true });
 	}
 
 	if (fs.existsSync(path) && config.doBackups) {
-		var timestamp = dateFormat(
+		let timestamp = dateFormat(
 			new Date(),
 			"ddmmyyyy_HHMMss"
 		);
 		fs.copyFileSync(path, `${path}.backup_${timestamp}`);
 	}
 
-	var fd = fs.openSync(path, 'a');
+	let fd = fs.openSync(path, 'a');
 
 	saveFunc(fd);
 
@@ -182,19 +182,19 @@ function load() {
 }
 
 function loadDatabase(name, loadFunc) {
-	var path = `${config.textDatabaseDir}/${name}`;
+	let path = `${config.textDatabaseDir}/${name}`;
 	if (!fs.existsSync(path)) {
 		return;
 	}
 
-	var rawTextDatabase = fs.readFileSync(path, 'utf8');
+	let rawTextDatabase = fs.readFileSync(path, 'utf8');
 
 	rawTextDatabase.split('\n').forEach((line) => {
 		if (!line) {
 			return;
 		}
 
-		var words = line.split(' ');
+		let words = line.split(' ');
 		loadFunc(words);
 	});
 }

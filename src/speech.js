@@ -1,11 +1,11 @@
-const config = require('./config.json');
+const config = require('../config.json');
 const random = require('./random.js');
 
 function amIMentioned(msg) {
 	if (msg.channel.name == config.homeChannel)
 		return true;
 
-	var isItMe = false;
+	let isItMe = false;
 
 	msg.mentions.users.each(user => {
 		if (user.username == config.nickname) {
@@ -17,7 +17,7 @@ function amIMentioned(msg) {
 }
 
 function isUserMentioned(msg, username) {
-	var isMentioned = false;
+	let isMentioned = false;
 
 	msg.mentions.users.each(user => {
 		if (user.username == username) {
@@ -29,7 +29,7 @@ function isUserMentioned(msg, username) {
 }
 
 function removeMentions(msg) {
-	var newMsg = msg.replace(/\<.*\>/g, "").trim();
+	let newMsg = msg.replace(/\<.*\>/g, "").trim();
 	newMsg = newMsg.replace(/  /g, " ");
 	return newMsg;
 }
@@ -41,7 +41,7 @@ function isYesOrNoQuestion(msg) {
 }
 
 function answerYesOrNo() {
-	var responses = [
+	let responses = [
 		"tak",
 		"no raczej nie inaczej",
 		"to się zgadza",
@@ -81,12 +81,12 @@ function isQuestionAboutPerson(msg) {
 }
 
 function choosePerson(guild) {
-	var response = "";
-	var randomResponse = guild.members.fetch()
+	let response = "";
+	let randomResponse = guild.members.fetch()
 		.then(users => {
-			var usersArray = users.array();
-			var randomUser = usersArray[random.roll(usersArray.length)];
-			var responses = [
+			let usersArray = users.array();
+			let randomUser = usersArray[random.roll(usersArray.length)];
+			let responses = [
 				"to musi być {user}",
 				"na pewno {user}",
 				"możliwe, że {user}",
@@ -95,7 +95,7 @@ function choosePerson(guild) {
 				"{user}, to o tobie mowa",
 				"{user}"
 			];
-			var randomResponse = responses[random.roll(responses.length)]; 
+			let randomResponse = responses[random.roll(responses.length)]; 
 			return randomResponse.replace("{user}", randomUser.displayName);
 		});
 	return randomResponse;

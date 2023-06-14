@@ -1,7 +1,7 @@
-const config = require('./config.json');
+const config = require('../config.json');
 const random = require('./random.js');
 
-var requestsUntilWantToTalk = config.minRequestsToRandomTalk
+let requestsUntilWantToTalk = config.minRequestsToRandomTalk
 
 module.exports.wantToTalk = function () {
 	if (requestsUntilWantToTalk > 0) {

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const config = require('./config.json');
+const config = require('../config.json');
 const brain = require('./brain.js');
 const random = require('./random.js');
 
