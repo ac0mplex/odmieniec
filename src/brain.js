@@ -1,14 +1,14 @@
-const config = require('../config.json');
-const dedent = require('dedent-js')
-const freeWill = require('./free_will.js');
-const speech = require('./speech.js');
-const randomSpeech = require('./random_speech.js');
+import config from '../config.json' assert { type: 'json' };
+import dedent from 'dedent-js';
+import * as freeWill from './free_will.js';
+import * as speech from './speech.js';
+import * as randomSpeech from './random_speech.js';
 
-function start() {
+export function start() {
 	randomSpeech.load();
 }
 
-function process(msg) {
+export function process(msg) {
 	if (msg.author.bot) {
 		return;
 	}
@@ -47,7 +47,7 @@ function process(msg) {
 	}
 }
 
-function dump() {
+export function dump() {
 	return dedent`
 		RANDOM SPEECH:
 		${randomSpeech.dump()}
@@ -57,10 +57,6 @@ function dump() {
 	`;
 }
 
-function save() {
+export function save() {
 	randomSpeech.save();
 }
-
-module.exports.start = start;
-module.exports.process = process;
-module.exports.save = save;

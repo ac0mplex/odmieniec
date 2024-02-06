@@ -1,9 +1,9 @@
-const config = require('../config.json');
-const random = require('./random.js');
+import config from '../config.json' assert { type: 'json' };
+import * as random from './random.js';
 
 let requestsUntilWantToTalk = config.minRequestsToRandomTalk
 
-module.exports.wantToTalk = function () {
+export function wantToTalk() {
 	if (requestsUntilWantToTalk > 0) {
 		requestsUntilWantToTalk--;
 		return false;
@@ -18,6 +18,6 @@ module.exports.wantToTalk = function () {
 }
 
 
-module.exports.dump = function () {
+export function dump() {
 	return `Requests until want to talk: ${requestsUntilWantToTalk}`;
 }

@@ -1,7 +1,7 @@
-const config = require('../config.json');
-const random = require('./random.js');
+import config from '../config.json' assert { type: 'json' };
+import * as random from './random.js';
 
-function amIMentioned(msg) {
+export function amIMentioned(msg) {
 	if (msg.channel.name == config.homeChannel)
 		return true;
 
@@ -16,7 +16,7 @@ function amIMentioned(msg) {
 	return isItMe;
 }
 
-function isUserMentioned(msg, username) {
+export function isUserMentioned(msg, username) {
 	let isMentioned = false;
 
 	msg.mentions.users.each(user => {
@@ -28,19 +28,19 @@ function isUserMentioned(msg, username) {
 	return isMentioned;
 }
 
-function removeMentions(msg) {
+export function removeMentions(msg) {
 	let newMsg = msg.replace(/\<.*\>/g, "").trim();
 	newMsg = newMsg.replace(/  /g, " ");
 	return newMsg;
 }
 
-function isYesOrNoQuestion(msg) {
+export function isYesOrNoQuestion(msg) {
 	msg = removeMentions(msg).toLowerCase();
 
 	return msg.startsWith("czy");
 }
 
-function answerYesOrNo() {
+export function answerYesOrNo() {
 	let responses = [
 		"tak",
 		"no raczej nie inaczej",
@@ -62,29 +62,29 @@ function answerYesOrNo() {
 	return responses[random.roll(responses.length)]
 }
 
-function isQuestionAboutPerson(msg) {
+export function isQuestionAboutPerson(msg) {
 	msg = removeMentions(msg).toLowerCase();
 
 	return msg.startsWith("kto") ||
-	       msg.startsWith("kogo") ||
-	       msg.startsWith("komu") ||
-	       msg.startsWith("od kogo") ||
-	       msg.startsWith("o kogo") ||
-	       msg.startsWith("po kogo") ||
-	       msg.startsWith("na kogo") ||
-	       msg.startsWith("bez kogo") ||
-	       msg.startsWith("z kim") ||
-	       msg.startsWith("za kim") ||
-	       msg.startsWith("w kim") ||
-	       msg.startsWith("na kim") ||
-	       msg.startsWith("o kim");
+		msg.startsWith("kogo") ||
+		msg.startsWith("komu") ||
+		msg.startsWith("od kogo") ||
+		msg.startsWith("o kogo") ||
+		msg.startsWith("po kogo") ||
+		msg.startsWith("na kogo") ||
+		msg.startsWith("bez kogo") ||
+		msg.startsWith("z kim") ||
+		msg.startsWith("za kim") ||
+		msg.startsWith("w kim") ||
+		msg.startsWith("na kim") ||
+		msg.startsWith("o kim");
 }
 
-function choosePerson(guild) {
+export function choosePerson(guild) {
 	let response = "";
 	let randomResponse = guild.members.fetch()
 		.then(users => {
-			let usersArray = users.array();
+			let usersArray = Array.from(users.values());
 			let randomUser = usersArray[random.roll(usersArray.length)];
 			let responses = [
 				"to musi być {user}",
@@ -95,24 +95,16 @@ function choosePerson(guild) {
 				"{user}, to o tobie mowa",
 				"{user}"
 			];
-			let randomResponse = responses[random.roll(responses.length)]; 
+			let randomResponse = responses[random.roll(responses.length)];
 			return randomResponse.replace("{user}", randomUser.displayName);
 		});
 	return randomResponse;
 }
 
 
-function isDumpRequest(msg) {
+export function isDumpRequest(msg) {
 	msg = removeMentions(msg).toLowerCase();
 
 	return msg.startsWith("brain dump") ||
-		   msg.startsWith("braindump");
+		msg.startsWith("braindump");
 }
-
-module.exports.amIMentioned = amIMentioned;
-module.exports.isUserMentioned = isUserMentioned;
-module.exports.isYesOrNoQuestion = isYesOrNoQuestion;
-module.exports.answerYesOrNo = answerYesOrNo;
-module.exports.isQuestionAboutPerson = isQuestionAboutPerson;
-module.exports.choosePerson = choosePerson;
-module.exports.isDumpRequest = isDumpRequest;

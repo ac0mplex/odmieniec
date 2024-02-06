@@ -1,8 +1,8 @@
-const config = require('../config.json');
-const dateFormat = require('dateformat');
-const dedent = require('dedent-js');
-const fs = require('fs');
-const random = require('./random.js');
+import config from '../config.json' assert { type: 'json' };
+import dedent from 'dedent-js';
+import * as dateFormat from 'dateformat';
+import * as fs from 'fs';
+import * as random from './random.js';
 
 let numOfBaseWords = config.numOfBaseWords;
 
@@ -56,7 +56,7 @@ let messages = new Array();
 let messages_new = new Array();
 let jumpDatabase = new Database();
 
-function learn(string, saveToFile = true) {
+export function learn(string, saveToFile = true) {
 	if (!string) {
 		return;
 	}
@@ -85,8 +85,12 @@ function learn(string, saveToFile = true) {
 	}
 }
 
-function talk() {
+export function talk() {
 	console.log("** I'm gonna talk! **");
+
+	if (messages.length == 0) {
+		return '...';
+	}
 
 	let currentMessageIndex = random.roll(messages.length);
 	let currentMessage = messages[currentMessageIndex];
@@ -111,8 +115,8 @@ function talk() {
 			);
 
 			currentMessageIndex = randomWordRef.messageIndex;
-			currentMessage      = messages[currentMessageIndex];
-			wordIndex           = randomWordRef.wordIndex;
+			currentMessage = messages[currentMessageIndex];
+			wordIndex = randomWordRef.wordIndex;
 
 			remainingJumps--;
 
@@ -131,7 +135,7 @@ function talk() {
 	return message;
 }
 
-function save() {
+export function save() {
 	console.log("Saving speech database...");
 
 	if (messages_new.length == 0) {
@@ -173,7 +177,7 @@ function saveDatabase(name, saveFunc) {
 	fs.closeSync(fd);
 }
 
-function load() {
+export function load() {
 	loadDatabase("messages", (words) => {
 		learn(words.join(' '), false);
 	});
@@ -199,14 +203,8 @@ function loadDatabase(name, loadFunc) {
 	});
 }
 
-function dump() {
+export function dump() {
 	return dedent`
 		Messages in brain: ${messages.length}
 	`;
 }
-
-module.exports.load = load;
-module.exports.save = save;
-module.exports.learn = learn;
-module.exports.talk = talk;
-module.exports.dump = dump;

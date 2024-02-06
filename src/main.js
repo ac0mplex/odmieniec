@@ -1,7 +1,6 @@
-const Discord = require('discord.js');
-const config = require('../config.json');
-const brain = require('./brain.js');
-const random = require('./random.js');
+import { Client, Events, GatewayIntentBits } from 'discord.js';
+import config from '../config.json' assert { type: 'json' };
+import * as brain from './brain.js';
 
 brain.start();
 
@@ -33,35 +32,23 @@ for (const [signal, options] of Object.entries(exitConditions)) {
 	);
 }
 
-const client = new Discord.Client({
-	ws: {
-		intents: [
-			'GUILDS',
-			'GUILD_MEMBERS',
-			//'GUILD_BANS',
-			//'GUILD_EMOJIS',
-			//'GUILD_INTEGRATIONS',
-			//'GUILD_WEBHOOKS',
-			//'GUILD_INVITES',
-			//'GUILD_VOICE_STATES',
-			//'GUILD_PRESENCES',
-			'GUILD_MESSAGES',
-			'GUILD_MESSAGE_REACTIONS',
-			//'GUILD_MESSAGE_TYPING',
-			//'DIRECT_MESSAGES',
-			//'DIRECT_MESSAGE_REACTIONS',
-			//'DIRECT_MESSAGE_TYPING',
-		]
-	}
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMessageReactions,
+		GatewayIntentBits.MessageContent
+	]
 });
 
-client.once('ready', () => {
-	console.log(`Logged in as ${client.user.tag}!`);
+client.once(Events.ClientReady, readyClient => {
+	console.log(`Logged in as ${readyClient.user.tag}!`);
 });
 
-client.on('message', msg => brain.process(msg));
+client.on(Events.MessageCreate, msg => brain.process(msg));
 
-client.setInterval(() => {
+setInterval(() => {
 	brain.save();
 }, Math.floor(config.saveEveryMinutes * 60 * 1000));
 
