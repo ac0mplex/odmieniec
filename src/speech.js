@@ -86,9 +86,12 @@ export function choosePerson(guild) {
 	if (rand < 0.2) { return Promise.resolve("nikt"); }
 
 	let randomResponse = guild.members.fetch()
-		.then(users => {
-			let usersArray = Array.from(users.values());
-			let randomUser = usersArray[random.roll(usersArray.length)];
+		.then(membersMap => {
+			let members = Array.from(membersMap.values()).filter(member =>
+				!member.user.bot && member.roles.color !== null
+			);
+
+			let randomMember = members[random.roll(members.length)];
 			let responses = [
 				"to musi być {user}",
 				"na pewno {user}",
@@ -99,7 +102,7 @@ export function choosePerson(guild) {
 				"{user}"
 			];
 			let randomResponse = responses[random.roll(responses.length)];
-			return randomResponse.replace("{user}", randomUser.displayName);
+			return randomResponse.replace("{user}", randomMember.displayName);
 		});
 	return randomResponse;
 }
