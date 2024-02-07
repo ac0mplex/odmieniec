@@ -81,7 +81,10 @@ export function isQuestionAboutPerson(msg) {
 }
 
 export function choosePerson(guild) {
-	let response = "";
+	let rand = Math.random();
+	if (rand < 0.1) { return Promise.resolve("każdy"); }
+	if (rand < 0.2) { return Promise.resolve("nikt"); }
+
 	let randomResponse = guild.members.fetch()
 		.then(users => {
 			let usersArray = Array.from(users.values());
