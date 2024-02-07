@@ -68,15 +68,18 @@ export function isQuestionAboutPerson(msg) {
 	return msg.startsWith("kto") ||
 		msg.startsWith("kogo") ||
 		msg.startsWith("komu") ||
+		msg.startsWith("kim") ||
 		msg.startsWith("od kogo") ||
 		msg.startsWith("o kogo") ||
 		msg.startsWith("po kogo") ||
 		msg.startsWith("na kogo") ||
 		msg.startsWith("bez kogo") ||
+		msg.startsWith("z kogo") ||
 		msg.startsWith("z kim") ||
 		msg.startsWith("za kim") ||
 		msg.startsWith("w kim") ||
 		msg.startsWith("na kim") ||
+		msg.startsWith("po kim") ||
 		msg.startsWith("o kim");
 }
 
