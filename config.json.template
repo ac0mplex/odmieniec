@@ -8,16 +8,26 @@
 	"saveEveryMinutes": 120,
 
 	"homeChannel": "jaskinia-odmieńca",
+	"recruitmentChannel": "czyściec",
 	"ignoredChannels": [
-		"disboard"
+		"disboard",
+		"czyściec",
+		"readme"
 	],
 
-	"numOfBaseWords": 2,
+	"welcomeChannel": "bar-kosmos",
+	"welcomeMessage": "witamy po drugiej stronie!",
+
+	"verifiedRole": "załoga",
+	"maleRole": "on",
+	"femaleRole": "ona",
+
+	"numOfBaseWords": 3,
 	"maxWords": 30,
 	"maxWordJumps": 30,
 	"chanceToJump": 1,
 	"chanceToTalk": 25,
-	"minRequestsToRandomTalk": 20
+	"minRequestsToRandomTalk": 30
 
 	"predefinedReactions": [
 	]
