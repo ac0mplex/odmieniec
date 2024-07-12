@@ -1,4 +1,4 @@
-import config from '../config.json' assert { type: 'json' };
+import config from '../config.json' with { type: 'json' };
 import dedent from 'dedent-js';
 import * as dateFormat from 'dateformat';
 import * as fs from 'fs';

@@ -1,4 +1,4 @@
-import config from '../config.json' assert { type: 'json' };
+import config from '../config.json' with { type: 'json' };
 import dedent from 'dedent-js';
 import { PermissionFlagsBits } from 'discord.js';
 import * as freeWill from './free_will.js';
